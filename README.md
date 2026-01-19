@@ -83,6 +83,10 @@ So I built it.
 - Pantry Surplus or Preference (e.g., "lots of ground beef")
 - Recipe Search Preferences (weekly notes like "need grilled cheese Wednesday")
 
+### Workflow Visualization
+![Make.com Workflow Overview](workflow-overview.png)
+*35+ module automation workflow running on Make.com*
+
 ### Workflow Architecture (Make.com)
 
 **Primary Scenario: "Weekly Meal Planning Agent"**
