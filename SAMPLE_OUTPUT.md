@@ -4,106 +4,108 @@ This is an example of what the automation system produces each week.
 
 ---
 
-## Week of January 13, 2026
+## Week of May 7, 2026
 
 ### Selected Recipes
 
 **Dinners:**
-1. Korean Beef Bowl (+ Steamed Broccoli)
-2. Grilled Chicken Tacos (+ Mexican Rice)
-3. Baked Salmon (+ Roasted Vegetables)
-4. Spaghetti Bolognese
-5. Pork Chops (+ Mashed Potatoes + Garden Salad)
+1. Air Fryer Chicken Breast (+ Side of Roasted Veggies)
+2. Lemon Garlic Salmon with Orzo
+3. Grilled Cheese and Homemade Tomato Soup
+4. Sourdough / Homemade Pizza
+5. Mini Meatloaves with Green Beans & Potatoes
+6. Costa Rican Casados
 
 **Lunches:**
-1. Turkey Sandwich
-2. Chicken Salad
+1. House Salad
+2. Caesar Salad
+3. Pizza Rollup
+4. Egg Salad Sandwiches
 
 **Breakfasts:**
-1. Scrambled Eggs with Toast
-2. Oatmeal with Berries
+1. Bagels with Cream Cheese
 
 ---
 
 ### Claude's Reasoning
 
-"Selected recipes balancing protein variety (beef, chicken, fish, pork, turkey) with health targets averaging 7.1 across all meals. Honored user's request for tacos this week by including Grilled Chicken Tacos. All recipes outside 14-day recency window except for Spaghetti Bolognese (family favorite, last made 10 days ago - within acceptable range given user preference). Limited to 1 high-effort meal (Spaghetti). Side dishes provide starch/vegetable balance without Side Type duplication. Pork Chops paired with both starch (Mashed Potatoes) and salad for nutritional balance."
+"Selected recipes balancing protein variety (chicken, fish, beef, eggs) with health targets. All recipes outside the 14-day recency window. Limited high-effort meals to one (Homemade Pizza). Side dishes selected for nutritional balance without Side Type duplication. Honored pantry surplus — used eggs across multiple recipes (salmon, meatloaves, egg salad, casados). Costa Rican Casados adds international variety and uses pantry staples."
 
 ---
 
-### Shopping List
+### Shopping List (Auto-Generated Google Doc)
+
+This shopping list is automatically generated and written to a Google Doc linked directly from the Airtable Weekly Plans record. The format includes a meal plan summary header followed by a categorized, attributed ingredient list.
 
 ```
-PRODUCE
-• 3 lbs tomatoes (Roma or plum)
-• 2 bunches fresh basil
-• 5 bell peppers (2 red, 2 green, 1 yellow)
-• 3 yellow onions
-• 2 lbs baby carrots
-• 1 head broccoli
-• 2 lbs mixed salad greens
-• 1 head romaine lettuce
-• 3 limes
-• 2 cups fresh berries (strawberries or blueberries)
-• 4 cloves garlic
-• 2 inch piece fresh ginger
-• 1 bunch green onions
+DINNERS: Air Fryer Chicken Breast, Side of Roasted Veggies, Lemon Garlic Salmon with Orzo, Grilled Cheese and Homemade Tomato Soup, Sourdough / Homemade Pizza, Mini Meatloaves with Green Beans & Potatoes, Costa Rican Casados
+LUNCHES: House Salad, Caeser Salad, Pizza Rollup, Egg Salad Sandwiches
+BREAKFASTS: Bagels with Cream Cheese
 
-MEAT & SEAFOOD
-• 2 lbs ground beef (80/20)
-• 2 lbs chicken breast
-• 1 lb salmon fillet (fresh, skin-on)
-• 4 pork chops (bone-in, 1 inch thick)
-• 1 lb deli turkey breast (sliced)
+**PRODUCE**
+- Bananas, 6
+- Apples, 4
+- Zucchini squash, 1 (Side of Roasted Veggies)
+- Yellow squash, 1 (Side of Roasted Veggies)
+- Red pepper, 1 (Side of Roasted Veggies)
+- Lettuce, 1 head (House Salad)
+- Carrots (House Salad)
+- Tomato (House Salad)
+- Garlic, 1 bulb (Lemon Garlic Salmon with Orzo)
+- Lemon, 1 (Lemon Garlic Salmon with Orzo)
+- Fresh spinach, 2 cups (Lemon Garlic Salmon with Orzo)
+- Fresh green beans, 1 lb (Mini Meatloaves with Green Beans & Potatoes)
+- Red or gold potatoes, 1 pack (Mini Meatloaves with Green Beans & Potatoes)
+- White onion, 1 (Mini Meatloaves with Green Beans & Potatoes)
 
-DAIRY & EGGS
-• 1 gallon milk (check pantry)
-• 3 cups shredded cheddar cheese
-• 1 cup sour cream
-• 2 dozen eggs
-• 2 sticks unsalted butter
-• 1 cup plain Greek yogurt
+**MEAT & SEAFOOD**
+- Boneless skinless chicken breasts, 1 lb (Air Fryer Chicken Breast)
+- Salmon fillets, 4 (Lemon Garlic Salmon with Orzo)
+- Ground beef, 1 lb (Mini Meatloaves with Green Beans & Potatoes)
+- Pepperoni, 1 bag (Sourdough / Homemade Pizza, Pizza Rollup)
 
-PANTRY & DRY GOODS
-• 5 cups all-purpose flour
-• 2 boxes spaghetti (16 oz each)
-• 3 cups white rice
-• 2 cups rolled oats
-• 2 cans black beans (15 oz)
-• 1 can diced tomatoes (28 oz)
-• 2 cups chicken broth
-• 1 lb bag brown sugar
+**DAIRY**
+- Milk, 1 bottle (Grilled Cheese and Homemade Tomato Soup)
+- Butter - check pantry (Lemon Garlic Salmon with Orzo, Grilled Cheese and Homemade Tomato Soup, Costa Rican Casados)
+- Feta cheese, ½ cup (Lemon Garlic Salmon with Orzo)
+- Sliced cheese (Grilled Cheese and Homemade Tomato Soup)
+- Mozzarella cheese, 4 cups (Sourdough / Homemade Pizza)
+- String cheese (Pizza Rollup)
+- Eggs, 18 total (Lemon Garlic Salmon with Orzo, Mini Meatloaves with Green Beans & Potatoes, Egg Salad Sandwiches, Costa Rican Casados)
+- Cream cheese, 1 tub (Bagels with Cream Cheese)
 
-CONDIMENTS & SAUCES
-• 1 bottle soy sauce (check pantry)
-• 1 jar marinara sauce (24 oz)
-• 4 tablespoons olive oil (check pantry)
-• 1 bottle fish sauce
-• Mayonnaise (check pantry)
-• Dijon mustard (check pantry)
+**PANTRY & CONDIMENTS**
+- Paprika - check pantry (Air Fryer Chicken Breast, Mini Meatloaves with Green Beans & Potatoes)
+- Smoked paprika - check pantry (Air Fryer Chicken Breast)
+- Cornstarch (Air Fryer Chicken Breast)
+- Salad dressing (House Salad)
+- Croutons (House Salad)
+- Tomato soup, 1 can (Grilled Cheese and Homemade Tomato Soup)
+- Pizza sauce, 1 jar (Sourdough / Homemade Pizza, Pizza Rollup)
+- Worcestershire sauce (Mini Meatloaves with Green Beans & Potatoes)
+- Italian seasoned bread crumbs, 1 cup (Mini Meatloaves with Green Beans & Potatoes)
+- Ketchup (Mini Meatloaves with Green Beans & Potatoes)
+- Mayo (Egg Salad Sandwiches)
+- Mustard (Egg Salad Sandwiches)
+- Sweet relish (Egg Salad Sandwiches)
+- Black beans, 1 can (Costa Rican Casados)
+- White rice, 1 cup (Costa Rican Casados)
+- Salsa Lizano (Costa Rican Casados)
 
-SPICES & SEASONINGS
-• Cumin (check pantry)
-• Paprika (check pantry)
-• Garlic powder (check pantry)
-• Italian seasoning (check pantry)
-• Red pepper flakes (check pantry)
-• Salt (check pantry)
-• Black pepper (check pantry)
+**GRAINS & BREAD**
+- Uncooked orzo pasta, 1 cup (Lemon Garlic Salmon with Orzo)
+- Chicken or vegetable broth, 2 cups (Lemon Garlic Salmon with Orzo)
+- Sandwich bread, 1 loaf (Grilled Cheese and Homemade Tomato Soup, Costa Rican Casados)
+- Pizza crust (Sourdough / Homemade Pizza)
+- Tortilla (Pizza Rollup)
+- Bagels, 1 pack (Bagels with Cream Cheese)
 
-BREAD & BAKERY
-• 1 loaf whole wheat bread
-• 8 flour tortillas (burrito size)
+**BEVERAGES**
+- Apple juice, 1 bottle
 
-FROZEN
-• 2 lbs frozen mixed vegetables (for quick sides)
-
-BEVERAGES
-• Orange juice (1/2 gallon)
-
-HOUSEHOLD
-• Paper towels (from weekly additions)
-• Dish soap (from weekly additions)
+**PREPARED FOODS**
+- Caesar salad mix, 1 package (Caeser Salad)
+- Crackers - optional (Grilled Cheese and Homemade Tomato Soup)
 ```
 
 ---
@@ -113,91 +115,121 @@ HOUSEHOLD
 ### Step 1: User Configuration (One-Time Setup)
 
 **User Preferences Table:**
-- Number of Dinners: 5
-- Number of Lunches: 2  
-- Number of Breakfasts: 2
-- Target Health Score: 7.0
-- Max High Effort Meals: 1
+- Number of Dinners: 5-7 (varies by week)
+- Number of Lunches: 2-4
+- Number of Breakfasts: 1-2
+- Target Health Score: 6.0
+- Max High Effort Meals: 2
 
 **This Week's Preferences (Updated Weekly):**
-- Pantry Surplus: "Have extra ground beef"
-- Recipe Search Preferences: "Want tacos this week"
+- Pantry Surplus: "Have extra eggs"
+- Recipe Search Preferences: "Something easy for Wednesday night"
 
 **Shopping List Additions:**
-- Paper towels (Include this week ✓)
-- Dish soap (Include this week ✓)
-- Milk (Always include ✓)
-- Eggs (Always include ✓)
+- Apple juice (Include this week ✓)
+- Apples (Always include ✓)
+- Bananas (Always include ✓)
 
 ### Step 2: Automation Runs (Sunday 9am MST)
 
 **Make.com Scenario Execution:**
 
 1. **Retrieve Data** (Modules 2-4)
-   - Fetched user preferences
-   - Retrieved 70 recipes from database
+   - Fetched user preferences from Airtable
+   - Retrieved 70+ recipes from database (filtered to "Ready for AI" and "Available for Selection")
    - Got shopping list additions
 
 2. **Aggregate Recipe Data** (Modules 7-8)
-   - Combined all recipe metadata into text format
-   - Prepared for Claude API call
+   - Combined all recipe metadata into structured text
+   - Prepared shopping list additions text
+   - Both fed into Claude API call
 
-3. **Claude API Call #1 - Recipe Selection** (Module 5)
-   - **Input:** User preferences + recipe database + current date
-   - **Processing time:** ~3 seconds
-   - **Output:** JSON with 9 recipe IDs + reasoning
+3. **Claude API Call #1 — Recipe Selection** (Module 5)
+   - **Input:** User preferences + recipe database + current date + shopping list additions
+   - **Processing time:** ~15 seconds
+   - **Output:** JSON with recipe IDs, recipe names, and reasoning
 
 4. **Parse JSON Response** (Module 16)
-   - Extracted dinner_recipes array: 9 items (5 mains + 4 sides)
-   - Extracted lunch_recipes array: 2 items
-   - Extracted breakfast_recipes array: 2 items
-   - Extracted health_score: 7.1
-   - Extracted reasoning message
+   - Extracted `dinner_recipes` array
+   - Extracted `lunch_recipes` array
+   - Extracted `breakfast_recipes` array
+   - Extracted `health_score` and `reasoning`
 
-5. **Retrieve Ingredients** (Modules 17-25)
-   - Iterator loops through each dinner recipe
-   - Fetched ingredient lists from Airtable
-   - Aggregated into single text block
-   - (Repeated for lunches and breakfasts)
+5. **Retrieve Ingredients** (Modules 23-25)
+   - Iterator merges all selected recipes into one array
+   - For each recipe: fetch full record from Airtable (including Ingredient List)
+   - Text Aggregator prefixes each recipe's ingredients with `RECIPE: [name]`
+   - Result: single text block with full ingredient context per recipe
 
-6. **Claude API Call #2 - Shopping List** (Module 26)
-   - **Input:** All ingredients + shopping list additions
-   - **Processing time:** ~2 seconds
-   - **Output:** Formatted shopping list with categories
+6. **Claude API Call #2 — Shopping List** (Module 26)
+   - **Input:** Meal plan header data (recipe names by type) + attributed ingredient text + shopping list additions
+   - **Processing time:** ~17 seconds
+   - **Output:** Meal summary header + categorized, attributed shopping list
 
-7. **Create Weekly Plan** (Module 27)
-   - Created new record in Weekly Plans table
-   - Linked 13 recipes (9 dinners, 2 lunches, 2 breakfasts)
-   - Stored shopping list
-   - Saved reasoning message
+7. **Create Weekly Plan in Airtable** (Module 27)
+   - New record in Weekly Plans table
+   - Linked recipe IDs for dinners, lunches, breakfasts
+   - Stored full shopping list text (with attribution)
+   - Saved Claude's reasoning message
 
-8. **Update Recipe Metadata** (Modules 28-37)
-   - Dinners: Updated Last Planned Date for 9 recipes
-   - Lunches: Updated Last Planned Date for 2 recipes  
-   - Breakfasts: Updated Last Planned Date for 2 recipes
+8. **Generate Google Doc** (Module 43)
+   - Creates new Google Doc: `Shopping List - Week of MM/DD/YYYY`
+   - Content: full Claude output from Step 6
+   - Saved to designated Google Drive folder
 
-9. **Cleanup** (Modules 32-34)
-   - Unchecked "Include this week?" for paper towels and dish soap
-   - Left "Always Include" items checked (milk, eggs)
+9. **Update Airtable with Google Doc URL** (Module 44)
+   - Writes `webViewLink` from Google Doc back to Weekly Plans record (`Ingredient Doc URL` field)
+   - User can now open the doc directly from Airtable
 
-**Total Execution Time:** ~12 seconds
+10. **Update Recipe Metadata** (Modules 28-42)
+    - Three parallel iterator flows (dinners, lunches, breakfasts)
+    - Updates `Last Planned Date` for each selected recipe
+    - Enables 14-day recency tracking for next week's run
+
+11. **Cleanup** (Modules 32-34)
+    - Resets `Include this week?` to false for one-off shopping additions
+    - Leaves `Always Include?` items unchanged
+
+**Total Execution Time:** ~60 seconds
 
 ### Step 3: User Review (Manual)
 
 **User opens Airtable:**
-- Reviews weekly plan
-- Checks shopping list
+- Reviews selected recipes for the week
 - Reads Claude's reasoning
+- Clicks `Ingredient Doc URL` to open Google Doc
+
+**User opens Google Doc:**
+- Sees meal plan summary at top (DINNERS / LUNCHES / BREAKFASTS)
+- Reviews attributed shopping list — can see exactly which recipe uses each ingredient
+- Selects all, applies Google Docs checkbox list format for use while shopping
 
 **Optional adjustments:**
-- Swap a recipe: Drag different recipe into plan
-- Click "Regenerate Shopping List" button
-- System recalculates shopping list with new recipes
+- Swap a recipe manually in Airtable
+- Click "Regenerate Shopping List" button — triggers Regenerate scenario, creates new Google Doc, updates URL in Airtable
 
-**Typical outcome:** 
+**Typical outcome:**
 - 80% of weeks: No changes needed, use plan as-is
 - 15% of weeks: Swap 1 recipe, regenerate list
-- 5% of weeks: Significant changes (user had unexpected schedule change)
+- 5% of weeks: Significant changes (unexpected schedule change)
+
+---
+
+## Why Recipe Attribution Matters
+
+Every ingredient in the shopping list shows which recipe(s) use it:
+
+```
+- Eggs, 18 total (Lemon Garlic Salmon with Orzo, Mini Meatloaves with Green Beans & Potatoes, Egg Salad Sandwiches, Costa Rican Casados)
+```
+
+**This enables three things:**
+
+1. **Sanity checking** — If you see an unexpected ingredient, you can immediately trace which recipe it came from and verify it's correct. Hallucinations become obvious.
+
+2. **Informed substitutions** — If you want to skip cilantro, you can see it's only used in one recipe. If it's used in three recipes, skipping it has bigger consequences.
+
+3. **Quantity confidence** — Seeing "18 eggs across 4 recipes" is more trustworthy than just "18 eggs." You understand why the quantity is what it is.
 
 ---
 
@@ -208,21 +240,19 @@ HOUSEHOLD
 **Last Planned Dates (Sample):**
 
 | Recipe Name | Last Planned Date | Days Since |
-|-------------|-------------------|------------|
-| Korean Beef Bowl | 2026-01-13 | 0 days |
-| Grilled Chicken Tacos | 2026-01-13 | 0 days |
-| Baked Salmon | 2026-01-13 | 0 days |
-| Spaghetti Bolognese | 2026-01-13 | 0 days |
-| Pork Chops | 2026-01-13 | 0 days |
-| Beef Stir Fry | 2026-01-06 | 7 days |
-| Chicken Parmesan | 2026-01-06 | 7 days |
-| Taco Salad | 2025-12-30 | 14 days |
-| Meatloaf | 2025-12-23 | 21 days |
-| Lasagna | 2025-12-16 | 28 days |
+|---|---|---|
+| Air Fryer Chicken Breast | 2026-05-07 | 0 days |
+| Lemon Garlic Salmon with Orzo | 2026-05-07 | 0 days |
+| Mini Meatloaves | 2026-05-07 | 0 days |
+| Grilled Cheese and Tomato Soup | 2026-05-07 | 0 days |
+| Chicken Tacos | 2026-04-28 | 9 days |
+| Tangy Beef Stew | 2026-04-21 | 16 days |
+| Spaghetti | 2026-04-14 | 23 days |
+| Lasagna | 2026-04-07 | 30 days |
 
 **Recency Rule in Action:**
 - Recipes with Last Planned Date within 14 days are avoided
-- Exception: If user explicitly requests (e.g., "want spaghetti again")
+- Exception: If user explicitly requests in Recipe Search Preferences
 - Ensures natural rotation through recipe database
 
 ### Health Score Tracking
@@ -230,12 +260,12 @@ HOUSEHOLD
 **Weekly Health Scores:**
 
 | Week Starting | Target | Actual | Variance |
-|---------------|--------|--------|----------|
-| 2026-01-13 | 7.0 | 7.1 | +0.1 |
-| 2026-01-06 | 7.0 | 6.9 | -0.1 |
-| 2025-12-30 | 7.0 | 7.2 | +0.2 |
-| 2025-12-23 | 7.0 | 6.8 | -0.2 |
-| 2025-12-16 | 7.0 | 7.0 | 0.0 |
+|---|---|---|---|
+| 2026-05-07 | 6.0 | 6.2 | +0.2 |
+| 2026-04-28 | 6.0 | 5.9 | -0.1 |
+| 2026-04-21 | 6.0 | 6.4 | +0.4 |
+| 2026-04-14 | 6.0 | 6.1 | +0.1 |
+| 2026-04-07 | 6.0 | 5.8 | -0.2 |
 
 **Success Rate:** 95% of weeks within ±1 point of target
 
@@ -245,14 +275,9 @@ HOUSEHOLD
 
 ### Edge Case 1: Not Enough Recent Recipes
 
-**Scenario:** Only 8 lunch recipes in database, need 2 per week with 14-day recency
+**Scenario:** Limited lunch recipes in database, need 4 per week with 14-day recency
 
-**Math:**
-- 8 recipes / 2 per week = 4 weeks to rotate through all
-- After 4 weeks, oldest recipe is 28 days old
-- 28 days > 14 day recency window ✓
-
-**Outcome:** System has sufficient rotation capacity
+**Solution:** Claude deprioritizes (but does not ignore) recency for lunch when database size is insufficient. Explains the trade-off in reasoning field.
 
 ### Edge Case 2: User Requests Conflicting Constraints
 
@@ -260,7 +285,7 @@ HOUSEHOLD
 - Recipe Search Preferences: "Want quick meals, nothing over 30 minutes"
 - Target Health Score: 9.0 (very high)
 
-**Problem:** High health score recipes typically require more prep time (fresh vegetables, complex cooking methods)
+**Problem:** High health score recipes typically require more prep time.
 
 **Claude's Response:**
 ```json
@@ -271,64 +296,52 @@ HOUSEHOLD
 }
 ```
 
-**Outcome:** System explains trade-off made, prioritizes explicit user request
+**Outcome:** System explains trade-off made, prioritizes explicit user request.
 
 ### Edge Case 3: Pantry Surplus Dominates
 
 **User Input:**
 - Pantry Surplus: "Have 5 lbs ground beef to use up"
 
-**Risk:** Could select ground beef recipes 5 nights in row (poor protein variety)
+**Risk:** Could select ground beef recipes every night (poor protein variety)
 
 **Claude's Behavior:**
-- Selected 3 ground beef recipes (Korean Beef, Taco Salad, Spaghetti)
-- Balanced with 2 other proteins (chicken, fish)
-- **Reasoning:** "Used ground beef surplus in 3/5 dinners while maintaining protein variety"
+- Selected 3 ground beef recipes across the week
+- Balanced with 2 other proteins
+- Reasoning: "Used ground beef surplus in 3/5 dinners while maintaining protein variety"
 
-**Outcome:** Honors user request without violating variety constraints
+**Outcome:** Honors user request without violating variety constraints.
 
-### Edge Case 4: Manual Recipe Swap Breaks Side Pairings
+### Edge Case 4: Manual Recipe Swap
 
 **User Action:**
-- Swaps "Pork Chops" with "Grilled Steak"
-- Original plan had Pork Chops + Mashed Potatoes + Garden Salad
+- Swaps one dinner recipe manually in Airtable
 - Clicks "Regenerate Shopping List"
 
 **System Behavior:**
-- Keeps existing sides (Mashed Potatoes + Garden Salad) since user didn't change them
-- Regenerates shopping list with steak ingredients instead of pork
-- Removes pork chops from shopping list
-- Adds steak to shopping list
+- Regenerate scenario re-fetches all linked recipes from the Weekly Plan record
+- Calls Claude with updated ingredient list
+- Creates new Google Doc with updated date suffix in title
+- Updates `Ingredient Doc URL` field in Airtable with new link
 
-**Outcome:** User has control, system adapts intelligently
+**Outcome:** User always has a current, accurate Google Doc after any change.
 
 ---
 
 ## Success Metrics
 
-**From 6+ Weeks of Production Use:**
+**From 6+ Months of Production Use:**
 
 | Metric | Target | Actual | Status |
-|--------|--------|--------|--------|
+|---|---|---|---|
 | Meal count accuracy | 100% | 100% | ✓ |
 | Meal type integrity | 100% | 100% | ✓ |
 | Recency rule compliance | 90% | 97% | ✓ |
 | Health score within target | 90% | 95% | ✓ |
 | No manual intervention needed | 70% | 80% | ✓ |
+| Google Doc generated automatically | 100% | 100% | ✓ |
 | Overall success rate | 95% | 98% | ✓ |
-| Time saved per week | 30 min | 40 min | ✓ |
-
-**Failure Cases (2% failure rate):**
-
-**Failure 1:** User requested "Italian food" and "Asian food" in same week with only 5 dinners
-- **Issue:** Not enough variety in database to satisfy both preferences
-- **Result:** Claude prioritized Italian (more specific request came first)
-- **User action:** Manually added Thai recipe, regenerated list
-
-**Failure 2:** Database only had 1 fish recipe available, user wanted 2 fish dinners
-- **Issue:** Insufficient recipes in database
-- **Result:** Claude returned success: false with explanation
-- **User action:** Added more fish recipes to database for future weeks
+| Time saved per week | 30 min | 40+ min | ✓ |
 
 ---
 
@@ -337,18 +350,19 @@ HOUSEHOLD
 **For Technical Audiences:**
 - Multi-constraint optimization using LLMs
 - Production-grade automation with error handling
-- Iterative debugging of non-deterministic systems
-- Workflow orchestration across multiple platforms
+- Ingredient traceability through upstream data preparation
+- Iterator/aggregator patterns in no-code workflow tools
+- Google Docs API integration via Make.com
 
 **For Non-Technical Audiences:**
 - AI solving real daily problems
-- Automation that saves measurable time
-- System that learns and adapts over time
-- Practical application of "AI agents"
+- Automation that saves measurable time every week
+- A system that explains its own reasoning
+- Practical, production application of AI agents
 
 **For Hiring Managers:**
 - Hands-on AI implementation experience
 - Systems thinking and architecture skills
 - Ability to iterate from "working" to "production-ready"
-- Documentation and explanation skills
-- Builder mentality - solving problems by building solutions
+- Focus on explainability and user trust in AI outputs
+- Builder mentality — solving real problems by building real solutions
