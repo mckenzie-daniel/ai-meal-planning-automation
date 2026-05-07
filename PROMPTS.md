@@ -1,6 +1,6 @@
 # Claude API Prompts
 
-This document contains the actual prompts used in the meal planning automation system. These prompts demonstrate multi-constraint optimization and structured output generation.
+This document contains the actual prompts used in the meal planning automation system. These prompts demonstrate multi-constraint optimization, structured output generation, and ingredient traceability.
 
 ---
 
@@ -14,92 +14,140 @@ This document contains the actual prompts used in the meal planning automation s
 
 **Max Tokens:** 4000
 
-### System Prompt
+**Used in:** Weekly Meal Planning Agent (Module 5)
+
+### Prompt Template
 
 ```
-You are an expert meal planning assistant. Your job is to select recipes for the week based on user preferences and constraints.
+You are an intelligent meal planning assistant. Your task is to create a complete weekly meal plan based on the user's recipe database, preferences, and constraints.
 
-You will be given:
-1. User preferences (number of meals, health targets, effort limits, weekly notes)
-2. A database of available recipes with metadata
-3. Current date (for calculating recency)
-4. Shopping list additions
-
-You must select the exact number of meals requested while balancing multiple constraints.
-
-CRITICAL: Return ONLY valid JSON. No preamble, no explanation outside the JSON structure.
-```
-
-### User Prompt Template
-
-```
-Today's date: {current_date}
+=== INPUT DATA ===
 
 USER PREFERENCES:
-- Number of Dinners to Plan: {num_dinners}
-- Number of Lunches to Plan: {num_lunches}
-- Number of Breakfasts to Plan: {num_breakfasts}
-- Target Weekly Health Score: {target_health_score}
-- Max High Effort Meals: {max_high_effort}
-- Pantry Surplus/Preferences: {pantry_notes}
-- Recipe Search Preferences: {weekly_preferences}
+Dinners to Plan: {num_dinners}
+Lunches to Plan: {num_lunches}
+Breakfasts to Plan: {num_breakfasts}
+Target Health Score: {target_health_score}
+Max High Effort Meals: {max_high_effort}
+Pantry Surplus: {pantry_notes}
+Recipe Search Preferences: {weekly_preferences}
 
-AVAILABLE RECIPES:
-{aggregated_recipe_data}
+AVAILABLE RECIPES: {aggregated_recipe_data}
 
-SHOPPING LIST ADDITIONS:
-{shopping_list_items}
+SHOPPING LIST ADDITIONS: {shopping_list_items}
 
----
+Current Date: {current_date}
 
-CONSTRAINTS (in priority order):
+=== YOUR TASKS ===
 
-HARD CONSTRAINTS (Non-negotiable):
-1. Select EXACTLY {num_dinners} dinner recipes, {num_lunches} lunch recipes, {num_breakfasts} breakfast recipes
-2. Meal Type Integrity: Lunch recipes ONLY go in lunch_recipes array. Dinner recipes ONLY go in dinner_recipes array. Breakfast recipes ONLY go in breakfast_recipes array. NEVER mix meal types.
+1. SELECT RECIPES FROM DATABASE:
+   - Select exactly {num_dinners} dinner recipes
+   - Select exactly {num_breakfasts} breakfast recipes
+   - Select exactly {num_lunches} lunch recipes
 
-SOFT CONSTRAINTS (Strongly preferred, but flexible):
-3. Recency: DO NOT select recipes where Last Planned Date is within the last 14 days, UNLESS the user explicitly requests a specific recipe in Recipe Search Preferences
-4. User's Recipe Search Preferences: Honor specific requests when possible (e.g., "want tacos", "use up ground beef")
-5. Health Score: Target average health score of {target_health_score} ± 1 point across all selected recipes
-6. Effort Level: Try to limit high-effort meals to {max_high_effort} maximum
-7. Protein Variety: Avoid same protein 3+ days in a row
-8. Seasonal Preference: Lowest priority - can be ignored if conflicts with other constraints
+CONSTRAINTS:
 
-SIDE DISH RULES:
-- When a main dish has "Needs Sides = true", you MUST select side dishes from the "Suggested Sides" list
-- CRITICAL DIVERSITY RULE: Never select multiple sides with the same Side Type for a single meal
-  - Example: If you select "Rice" (Side Type = Starch), you cannot also select "Mashed Potatoes" (Side Type = Starch)
-  - You must balance: Starch + Vegetable, or Starch + Salad, etc.
-- The number of sides to select is specified in "Number of Sides Needed"
+HARD CONSTRAINTS (MUST BE MET):
+1. EXACT MEAL COUNTS:
+   - You MUST select EXACTLY {num_dinners} dinner recipes
+   - You MUST select EXACTLY {num_lunches} lunch recipes
+   - You MUST select EXACTLY {num_breakfasts} breakfast recipes
+   - These counts are ABSOLUTE and non-negotiable
 
-OUTPUT FORMAT:
-Return a JSON object with this EXACT structure:
+2. MEAL TYPE INTEGRITY:
+   - Recipes MUST match their designated Meal Type
+   - Lunch recipes can ONLY be in lunch_recipes array
+   - Dinner recipes can ONLY be in dinner_recipes array
+   - Breakfast recipes can ONLY be in breakfast_recipes array
+   - NEVER move recipes between meal types
+
+SOFT CONSTRAINTS (PRIORITIZE, BUT CAN BE FLEXIBLE):
+
+3. USER'S RECIPE SEARCH PREFERENCES (Strongly Preferred):
+   - The "Recipe Search Preferences" field contains the user's specific requests
+   - Try to honor these preferences when possible:
+     * Specific recipe requests (e.g., "include tuna sandwiches for lunch")
+     * Ingredient surplus (e.g., "use ground beef")
+     * Effort needs (e.g., "need easy meals this week")
+     * Cravings or dietary needs
+   - If a requested recipe conflicts with Hard Constraints (wrong meal type, or
+     would exceed meal counts), explain in reasoning why it couldn't be included
+   - User preferences can override Soft Constraints below (health score, effort, variety)
+
+4. HEALTH SCORE (Flexible):
+   - Target weekly average of {target_health_score}
+   - Can be flexible by ±1 point
+
+5. EFFORT LEVEL (Flexible):
+   - Try to keep high-effort meals to {max_high_effort} or fewer
+   - Can be exceeded if user requests high-effort recipes
+
+6. PROTEIN VARIETY (Nice to Have):
+   - Try not to repeat same Primary Protein 3+ days in a row for dinners
+   - Aim for variety when possible
+
+7. SEASONAL PREFERENCE (Nice to Have):
+   - Consider if applicable, but lowest priority
+
+=== OUTPUT FORMAT ===
+
+CRITICAL: You must ALWAYS return valid JSON in the exact structure below. Never return plain text explanations outside of JSON.
+
+IF YOU CAN CREATE A SUCCESSFUL MEAL PLAN:
 
 {
   "success": true,
   "dinner_recipes": [
-    {"recipe_id": "rec123abc", "notes": "Brief reason for selection"},
-    {"recipe_id": "rec456def", "notes": "Brief reason for selection"},
-    // ... exactly {num_dinners} items (includes main dishes AND their sides)
+    {
+      "recipe_id": "recXXXXXXXXXXXXXX",
+      "recipe_name": "Chicken Tacos",
+      "notes": "Using leftover chicken"
+    }
   ],
   "lunch_recipes": [
-    {"recipe_id": "rec789ghi", "notes": "Brief reason for selection"},
-    // ... exactly {num_lunches} items
+    {
+      "recipe_id": "recXXXXXXXXXXXXXX",
+      "recipe_name": "Caesar Wrap",
+      "notes": "High protein lunch"
+    }
   ],
   "breakfast_recipes": [
-    {"recipe_id": "recXYZ123", "notes": "Brief reason for selection"},
-    // ... exactly {num_breakfasts} items
+    {
+      "recipe_id": "recXXXXXXXXXXXXXX",
+      "recipe_name": "Protein Smoothie",
+      "notes": "Uses bananas from shopping list"
+    }
   ],
   "health_score": 7.2,
-  "reasoning": "2-3 sentence explanation of overall selections, mentioning any constraints that were relaxed or priorities made"
+  "reasoning": "Explanation of how constraints were met"
 }
 
 IMPORTANT:
-- If you cannot meet the constraints (e.g., not enough recipes available), set "success": false and explain in "reasoning"
-- Ensure all recipe_id values exist in the provided recipe database
-- Double-check meal type integrity - lunches in lunch_recipes ONLY, dinners in dinner_recipes ONLY
-- Double-check you have EXACTLY the right number of meals for each type
+- Side dishes should be included in the dinner_recipes array alongside their main dishes
+- Do NOT include "meal_type" field in individual recipe objects (it's implied by which array they're in)
+- Breakfast and lunch recipes do not typically have sides, so only dinner_recipes will contain side dish recipes
+
+IF YOU CANNOT CREATE A MEAL PLAN THAT MEETS ALL CONSTRAINTS:
+
+{
+  "success": false,
+  "error_message": "Clear explanation of why the plan couldn't be created",
+  "constraints_failed": ["list of constraint names that couldn't be met"],
+  "suggestions": "What the user should do to fix this",
+  "available_recipes_stats": {
+    "total_recipes": X,
+    "avg_health_score": Y,
+    "high_effort_count": Z
+  }
+}
+
+CRITICAL INSTRUCTION - READ CAREFULLY:
+Your ENTIRE response must be ONLY the JSON object.
+- Do NOT include ANY text before the opening {
+- Do NOT include ANY text after the closing }
+- Do NOT include markdown code fences like ```json
+- The FIRST character of your response must be {
+- The LAST character of your response must be }
 ```
 
 ### Example Response
@@ -108,26 +156,21 @@ IMPORTANT:
 {
   "success": true,
   "dinner_recipes": [
-    {"recipe_id": "rec1A2B3C", "notes": "Korean Beef Bowl - high protein, haven't had in 3 weeks"},
-    {"recipe_id": "rec4D5E6F", "notes": "Steamed Broccoli - pairs well, vegetable side"},
-    {"recipe_id": "rec7G8H9I", "notes": "Grilled Chicken Tacos - user requested tacos, protein variety"},
-    {"recipe_id": "recJ1K2L3", "notes": "Mexican Rice - starch side for tacos"},
-    {"recipe_id": "recM4N5O6", "notes": "Baked Salmon - fish for protein variety, high health score"},
-    {"recipe_id": "recP7Q8R9", "notes": "Roasted Vegetables - vegetable side, complements salmon"},
-    {"recipe_id": "recS1T2U3", "notes": "Spaghetti Bolognese - medium effort, family favorite"},
-    {"recipe_id": "recV4W5X6", "notes": "Pork Chops - protein variety, moderate health score"},
-    {"recipe_id": "recY7Z8A9", "notes": "Mashed Potatoes - starch side for pork chops"}
+    {"recipe_id": "rec1A2B3C", "recipe_name": "Tangy Beef Stew", "notes": "Hearty winter meal, high health score, 3 weeks since last planned"},
+    {"recipe_id": "rec4D5E6F", "recipe_name": "Grilled Fish Tacos", "notes": "Fish for protein variety, user requested tacos"},
+    {"recipe_id": "rec7G8H9I", "recipe_name": "Easy Chicken Scampi", "notes": "Low effort, pasta variety"},
+    {"recipe_id": "recJ1K2L3", "recipe_name": "Mini Meatloaves with Green Beans & Potatoes", "notes": "Classic family meal, complete with sides"},
+    {"recipe_id": "recM4N5O6", "recipe_name": "Sourdough / Homemade Pizza", "notes": "User requested pizza night"}
   ],
   "lunch_recipes": [
-    {"recipe_id": "recB1C2D3", "notes": "Turkey Sandwich - low effort, good for quick lunch"},
-    {"recipe_id": "recE4F5G6", "notes": "Chicken Salad - high health score, uses leftover chicken"}
+    {"recipe_id": "recP7Q8R9", "recipe_name": "Caesar Salad", "notes": "Light, high health score"},
+    {"recipe_id": "recS1T2U3", "recipe_name": "Egg Salad Sandwiches", "notes": "Low effort, protein variety"}
   ],
   "breakfast_recipes": [
-    {"recipe_id": "recH7I8J9", "notes": "Scrambled Eggs - quick, high protein"},
-    {"recipe_id": "recK1L2M3", "notes": "Oatmeal - high health score, low effort"}
+    {"recipe_id": "recV4W5X6", "recipe_name": "Bagels with Cream Cheese", "notes": "Quick, family favorite"}
   ],
-  "health_score": 7.1,
-  "reasoning": "Selected recipes balancing protein variety (beef, chicken, fish, pork) with health targets. Honored user's request for tacos. All recipes outside 14-day recency window except for one family favorite (spaghetti at 10 days). Limited to 1 high-effort meal (spaghetti). Side dishes provide starch/vegetable balance without duplication."
+  "health_score": 6.8,
+  "reasoning": "Selected dinners balancing protein variety (beef, fish, chicken, pork) with health targets. Honored user's request for tacos and pizza. All recipes outside 14-day recency window. Limited to 1 high-effort meal. Lunch and breakfast selections are low-effort to balance the week."
 }
 ```
 
@@ -135,154 +178,162 @@ IMPORTANT:
 
 ## Prompt 2: Shopping List Generation
 
-**Purpose:** Consolidate ingredients from all selected recipes into organized grocery list
+**Purpose:** Consolidate ingredients from all selected recipes into an organized, attributed grocery list with meal plan summary header
 
 **Model:** claude-sonnet-4-20250514
 
 **Temperature:** Default
 
-**Max Tokens:** 2000
+**Max Tokens:** 2000 (weekly agent) / 4000 (regenerate scenario)
 
-### System Prompt
+**Used in:** Weekly Meal Planning Agent (Module 26) and Regenerate Shopping List (Module 14)
+
+### Design Approach
+
+**Key architectural decision:** Before ingredients reach this prompt, the Make.com aggregation step prefixes each recipe's ingredient list with `RECIPE: [recipe name]`. This gives Claude full traceability — it knows which recipe each ingredient comes from, enabling accurate attribution in the output.
+
+Additionally, the selected recipe names for each meal type are passed in explicitly using `join(map(dinner_recipes; "recipe_name"); ", ")` so Claude can construct the meal plan summary header without guessing.
+
+### Prompt Template (Weekly Agent — Module 26)
 
 ```
-You are a grocery list consolidation expert. Your job is to take ingredients from multiple recipes and create a well-organized shopping list.
+You are creating a consolidated shopping list from multiple recipes.
 
-You will merge duplicate ingredients, handle unit conversions intelligently, and organize by grocery store category.
+THIS WEEK'S MEAL PLAN:
+Dinners: {join of dinner recipe names}
+Lunches: {join of lunch recipe names}
+Breakfasts: {join of breakfast recipe names}
 
-Return ONLY the formatted shopping list text. No preamble, no JSON, just the list.
+INGREDIENTS FROM SELECTED RECIPES:
+{aggregated_ingredients — each recipe prefixed with "RECIPE: [name]"}
+
+ADDITIONAL SHOPPING LIST ITEMS: {shopping_list_additions}
+
+YOUR TASK:
+1. Combine all ingredients and additional items
+2. Merge duplicate ingredients and sum their quantities
+3. Organize by category - create categories dynamically based on both recipe ingredients AND shopping list additions
+4. CRITICAL: Include EVERY item from "ADDITIONAL SHOPPING LIST ITEMS" section, even if it's the only item in its category
+5. Format as a clean shopping list
+
+COMBINATION RULES:
+- Combine like ingredients (e.g., "2 cups flour" + "1 cup flour" = "3 cups flour")
+- If units differ, list both (e.g., "2 lbs chicken breast, 1 rotisserie chicken")
+- Round to practical quantities (e.g., 2.5 cups → 2½ cups)
+- For items from "Always Include" or "Include this week", keep them even if duplicates
+
+PANTRY STAPLES (don't worry about quantities):
+- Salt, pepper, cooking oil, olive oil
+- Basic spices (garlic powder, onion powder, etc.)
+- Flour, sugar (unless recipe needs large amount like baking)
+- Butter (unless recipe needs multiple sticks)
+
+For pantry staples, just note "check pantry" instead of specific quantities unless the recipe requires an unusually large amount.
+
+RECIPE ATTRIBUTION RULES:
+- Each ingredient line must include which recipe(s) use it, in parentheses at the end
+- If an ingredient is used by multiple recipes, list all recipe names separated by commas
+- Items from ADDITIONAL SHOPPING LIST ITEMS do not need recipe attribution
+- Format: "- Item, quantity (Recipe 1, Recipe 2)"
+
+OUTPUT FORMAT:
+Your output must follow this exact structure:
+
+DINNERS: [comma separated dinner recipe names]
+LUNCHES: [comma separated lunch recipe names]
+BREAKFASTS: [comma separated breakfast recipe names]
+
+Then a blank line, then the shopping list organized by category.
+
+Example:
+DINNERS: Chicken Tacos, Fajitas, Spaghetti
+LUNCHES: Caesar Wrap, Tuna Sandwich
+BREAKFASTS: Protein Smoothie, Eggs and Toast
+
+**PRODUCE**
+- Bananas, 6 (Protein Smoothie)
+- Cilantro, 1 bunch (Chicken Tacos, Fajitas)
+- Lettuce, 1 head (Caesar Wrap)
+
+**DAIRY**
+- Shredded cheese, 2 cups (Chicken Tacos, Fajitas)
+- Eggs, 6 (Protein Scramble)
+
+**HOUSEHOLD**
+- Paper towels, 1 roll
+
+Return ONLY the formatted output. No preamble, no explanation.
 ```
 
-### User Prompt Template
+### Prompt Template (Regenerate Scenario — Module 14)
+
+The regenerate prompt is identical in instructions, but the variable references differ because the regenerate scenario fetches dinners, lunches, and breakfasts in separate iterator chains (modules 7, 10, 13) rather than a merged iterator:
 
 ```
 INGREDIENTS FROM SELECTED RECIPES:
-{aggregated_ingredients_from_all_recipes}
+{module_7_text — dinner ingredients}
+{module_10_text — lunch ingredients}
+{module_13_text — breakfast ingredients}
 
-ADDITIONAL SHOPPING LIST ITEMS:
-{shopping_list_additions}
-
----
-
-INSTRUCTIONS:
-
-1. MERGE DUPLICATE INGREDIENTS:
-   - Combine quantities when units match (e.g., "2 cups flour" + "1 cup flour" = "3 cups flour")
-   - Handle unit differences intelligently (e.g., "1 lb tomatoes" + "8 oz tomatoes" = "1.5 lbs tomatoes")
-   - If units don't convert easily, list separately with note (e.g., "2 cups diced tomatoes" AND "1 lb fresh tomatoes")
-
-2. ORGANIZE BY CATEGORY:
-   Use these categories in this order:
-   - PRODUCE
-   - MEAT & SEAFOOD
-   - DAIRY & EGGS
-   - PANTRY & DRY GOODS
-   - FROZEN
-   - BREAD & BAKERY
-   - CONDIMENTS & SAUCES
-   - SPICES & SEASONINGS
-   - BEVERAGES
-   - HOUSEHOLD (if applicable)
-   - OTHER
-
-3. FORMATTING:
-   - Each category as ALL CAPS header
-   - Items as bullet points with "•" character
-   - Include quantities and units
-   - Be specific (e.g., "2 lbs tomatoes (Roma or plum)" not just "tomatoes")
-
-4. STAPLES NOTE:
-   - For common staples (salt, pepper, oil, flour, sugar), add "(check pantry)" unless recipe needs large quantity
-   - Large quantity example: "5 cups flour" → list without pantry note
-
-5. INCLUDE ALL ITEMS:
-   - All ingredients from recipes
-   - All items from "ADDITIONAL SHOPPING LIST ITEMS" section
-
-OUTPUT FORMAT EXAMPLE:
-
-PRODUCE
-• 2 lbs tomatoes (Roma or plum)
-• 1 bunch fresh basil
-• 3 bell peppers (red)
-• 2 yellow onions
-• 1 lb baby carrots
-
-MEAT & SEAFOOD
-• 2 lbs ground beef (80/20)
-• 1.5 lbs chicken breast
-• 1 lb salmon fillet
-
-DAIRY & EGGS
-• 1 gallon milk (check pantry)
-• 2 cups shredded cheddar cheese
-• 1 dozen eggs (check pantry)
-• 1 stick unsalted butter
-
-PANTRY & DRY GOODS
-• 3 cups flour (check pantry)
-• 1 box spaghetti (16 oz)
-• 2 cups white rice
-
-... (continue for all categories)
+ADDITIONAL SHOPPING LIST ITEMS: {module_4_text}
 ```
 
-### Example Response
+Everything else — combination rules, pantry staples, attribution rules, output format — is identical to the weekly agent prompt.
+
+### Example Output
 
 ```
-PRODUCE
-• 3 lbs tomatoes (Roma or plum)
-• 2 bunches fresh basil
-• 5 bell peppers (2 red, 2 green, 1 yellow)
-• 3 yellow onions
-• 2 lbs baby carrots
-• 1 head broccoli
-• 2 lbs mixed salad greens
-• 3 limes
+DINNERS: Air Fryer Chicken Breast, Lemon Garlic Salmon with Orzo, Grilled Cheese and Homemade Tomato Soup, Sourdough / Homemade Pizza, Mini Meatloaves with Green Beans & Potatoes
+LUNCHES: House Salad, Caesar Salad
+BREAKFASTS: Bagels with Cream Cheese
 
-MEAT & SEAFOOD
-• 2 lbs ground beef (80/20)
-• 2 lbs chicken breast
-• 1 lb salmon fillet
-• 1 lb pork chops (bone-in)
+**PRODUCE**
+- Zucchini squash, 1 (Side of Roasted Veggies)
+- Yellow squash, 1 (Side of Roasted Veggies)
+- Red pepper, 1 (Side of Roasted Veggies)
+- Lettuce, 1 head (House Salad)
+- Garlic, 1 bulb (Lemon Garlic Salmon with Orzo)
+- Lemon, 1 (Lemon Garlic Salmon with Orzo)
+- Fresh spinach, 2 cups (Lemon Garlic Salmon with Orzo)
+- Fresh green beans, 1 lb (Mini Meatloaves with Green Beans & Potatoes)
+- Red or gold potatoes, 1 pack (Mini Meatloaves with Green Beans & Potatoes)
 
-DAIRY & EGGS
-• 1 gallon milk (check pantry)
-• 3 cups shredded cheddar cheese
-• 1 cup sour cream
-• 2 dozen eggs
-• 2 sticks unsalted butter
+**MEAT & SEAFOOD**
+- Boneless skinless chicken breasts, 1 lb (Air Fryer Chicken Breast)
+- Salmon fillets, 4 (Lemon Garlic Salmon with Orzo)
+- Ground beef, 1 lb (Mini Meatloaves with Green Beans & Potatoes)
+- Pepperoni, 1 bag (Sourdough / Homemade Pizza)
 
-PANTRY & DRY GOODS
-• 5 cups all-purpose flour
-• 2 boxes spaghetti (16 oz each)
-• 3 cups white rice
-• 2 cans black beans (15 oz)
-• 1 can diced tomatoes (28 oz)
-• 2 cups chicken broth
+**DAIRY**
+- Milk, 1 bottle (Grilled Cheese and Homemade Tomato Soup)
+- Butter - check pantry (Lemon Garlic Salmon with Orzo, Grilled Cheese and Homemade Tomato Soup)
+- Feta cheese, ½ cup (Lemon Garlic Salmon with Orzo)
+- Sliced cheese (Grilled Cheese and Homemade Tomato Soup)
+- Mozzarella cheese, 4 cups (Sourdough / Homemade Pizza)
+- Eggs, 18 total (Lemon Garlic Salmon with Orzo, Mini Meatloaves with Green Beans & Potatoes)
+- Cream cheese, 1 tub (Bagels with Cream Cheese)
 
-CONDIMENTS & SAUCES
-• 1 bottle soy sauce (check pantry)
-• 1 jar marinara sauce (24 oz)
-• 2 tablespoons olive oil (check pantry)
-• 1 bottle fish sauce
+**PANTRY & CONDIMENTS**
+- Smoked paprika - check pantry (Air Fryer Chicken Breast)
+- Cornstarch (Air Fryer Chicken Breast)
+- Salad dressing (House Salad)
+- Tomato soup, 1 can (Grilled Cheese and Homemade Tomato Soup)
+- Pizza sauce, 1 jar (Sourdough / Homemade Pizza)
+- Worcestershire sauce (Mini Meatloaves with Green Beans & Potatoes)
+- Italian seasoned bread crumbs, 1 cup (Mini Meatloaves with Green Beans & Potatoes)
 
-SPICES & SEASONINGS
-• Cumin (check pantry)
-• Paprika (check pantry)
-• Garlic powder (check pantry)
-• Fresh garlic (1 head)
-• Fresh ginger (2 inch piece)
+**GRAINS & BREAD**
+- Uncooked orzo pasta, 1 cup (Lemon Garlic Salmon with Orzo)
+- Chicken broth, 2 cups (Lemon Garlic Salmon with Orzo)
+- Sandwich bread, 1 loaf (Grilled Cheese and Homemade Tomato Soup)
+- Pizza crust (Sourdough / Homemade Pizza)
+- Bagels, 1 pack (Bagels with Cream Cheese)
 
-BREAD & BAKERY
-• 1 loaf whole wheat bread
-• 8 flour tortillas (burrito size)
+**BEVERAGES**
+- Apple juice, 1 bottle
 
-BEVERAGES
-• Orange juice (1/2 gallon)
-
-HOUSEHOLD
-• Paper towels (from additional items list)
+**HOUSEHOLD**
+- Paper towels, 1 roll
 ```
 
 ---
@@ -304,11 +355,11 @@ Try to select recipes that:
 
 **Improved Version:**
 ```
-HARD CONSTRAINTS (Non-negotiable):
+HARD CONSTRAINTS (MUST BE MET):
 1. Exact meal counts
 2. Meal type integrity
 
-SOFT CONSTRAINTS (Strongly preferred, but flexible):
+SOFT CONSTRAINTS (PRIORITIZE, BUT CAN BE FLEXIBLE):
 3. Recency
 4. User preferences
 5. Health score
@@ -343,7 +394,8 @@ Never select multiple sides with the same Side Type
 **With Examples:**
 ```
 CRITICAL DIVERSITY RULE: Never select multiple sides with the same Side Type
-  - Example: If you select "Rice" (Side Type = Starch), you cannot also select "Mashed Potatoes" (Side Type = Starch)
+  - Example: If you select "Rice" (Side Type = Starch), you cannot also select
+    "Mashed Potatoes" (Side Type = Starch)
   - You must balance: Starch + Vegetable, or Starch + Salad, etc.
 ```
 
@@ -364,7 +416,7 @@ Return a JSON object with this EXACT structure:
 {
   "success": true,
   "dinner_recipes": [
-    {"recipe_id": "rec123abc", "notes": "Brief reason for selection"},
+    {"recipe_id": "rec123abc", "recipe_name": "Chicken Tacos", "notes": "Brief reason"},
     ...
   ],
   ...
@@ -375,14 +427,28 @@ Return a JSON object with this EXACT structure:
 
 ### 5. Multiple Reminders for Critical Rules
 
-Notice how "Meal Type Integrity" appears:
+Notice how "Meal Type Integrity" appears multiple times in Prompt 1:
 1. In HARD CONSTRAINTS section
-2. In OUTPUT FORMAT section ("lunches in lunch_recipes ONLY")
-3. In IMPORTANT notes ("Double-check meal type integrity")
+2. In OUTPUT FORMAT section
+3. In CRITICAL INSTRUCTION notes
 
 **Lesson:** Critical rules need reinforcement in multiple places. Repetition works.
 
-### 6. Natural Language Input Works
+### 6. Upstream Data Preparation Enables Downstream Intelligence
+
+The recipe attribution in the shopping list output is not magic — it works because Make.com prepares the data correctly before Claude sees it. Each recipe's ingredient list is prefixed with `RECIPE: [name]` in the text aggregator module. Claude then has the context it needs to attribute each ingredient accurately.
+
+**Lesson:** What you feed the model matters as much as how you prompt it. Good data preparation upstream reduces prompt complexity downstream.
+
+### 7. Traceability Builds Trust
+
+Adding recipe attribution transformed the shopping list from "output to accept" into "output to verify." Users can now see exactly where every ingredient came from — catching hallucinations, making informed substitutions, and understanding why something is on the list.
+
+This was a small prompt change (adding attribution rules and the `RECIPE: [name]` prefix upstream) with a large usability impact.
+
+**Lesson:** Explainability in AI output isn't just a nice-to-have. It's what turns AI output into something people actually rely on.
+
+### 8. Natural Language Input Works
 
 The "Recipe Search Preferences" field accepts natural language:
 - "want tacos"
@@ -391,7 +457,7 @@ The "Recipe Search Preferences" field accepts natural language:
 
 **Why it works:** Claude is optimized for natural language understanding. Fighting this with structured formats is counterproductive.
 
-**Lesson:** Let users write like humans. Use AI's strength (NLU) rather than requiring structured input.
+**Lesson:** Let users write like humans. Use AI's strength rather than requiring structured input.
 
 ---
 
@@ -405,7 +471,7 @@ The "Recipe Search Preferences" field accepts natural language:
 
 **Headers:**
 ```
-x-api-key: [API key from Make.com variable]
+x-api-key: [API key stored in Make.com]
 anthropic-version: 2023-06-01
 content-type: application/json
 ```
@@ -418,7 +484,7 @@ content-type: application/json
   "messages": [
     {
       "role": "user",
-      "content": "[Prompt template filled with Airtable data]"
+      "content": "[Prompt template filled with Make.com variable mappings]"
     }
   ]
 }
@@ -438,49 +504,41 @@ Claude returns:
       "text": "{\"success\": true, \"dinner_recipes\": [...], ...}"
     }
   ],
-  "model": "claude-sonnet-4-20250514",
-  ...
+  "model": "claude-sonnet-4-20250514"
 }
 ```
 
 **Make.com Parsing:**
-1. Extract: `{{response.content[1].text}}` (Make.com uses 1-indexed arrays)
-2. Use "Parse JSON" module with pre-defined data structure
-3. Maps to variables: `{{json_parser.dinner_recipes}}`, `{{json_parser.reasoning}}`, etc.
+1. Extract text: `{{response.data.content[1].text}}` (Make.com uses 1-indexed arrays)
+2. For Prompt 1 (recipe selection): Use "Parse JSON" module with pre-defined data structure
+3. For Prompt 2 (shopping list): Text is used directly — stored in Airtable and written to Google Doc
 
 ### Error Handling
 
-**Success Check:**
-```javascript
-// In Make.com router
-if ({{json_parser.success}} == false) {
-  // Send error notification
-  // Log reasoning message
-  // Don't create Weekly Plan
-}
-```
+**Success Check (Prompt 1 only):**
+- Route on `{{json_parser.success}}` == true / false
+- False route: Log error message, skip Weekly Plan creation
 
 **Validation:**
-- Check array lengths match expected counts
-- Verify all recipe_ids exist in Airtable
-- Validate JSON structure before processing
+- Prompt 1 returns `success: false` with explanation if constraints cannot be met
+- Prompt 2 has no failure mode — always returns formatted text
 
 ---
 
 ## Cost Analysis
 
 **Per Weekly Run:**
-- Recipe Selection API call: ~1500 input tokens, ~800 output tokens
-- Shopping List API call: ~800 input tokens, ~400 output tokens
-- Total: ~3500 tokens per week
+- Recipe Selection (Prompt 1): ~1,500 input tokens, ~800 output tokens
+- Shopping List (Prompt 2): ~1,400 input tokens, ~1,500 output tokens
+- Total: ~5,200 tokens per week
 
 **Cost at Sonnet 4 pricing:**
 - Input: $3 per million tokens
 - Output: $15 per million tokens
-- Weekly cost: ~$0.017 (less than 2 cents)
-- Annual cost: ~$0.88
+- Weekly cost: ~$0.027 (less than 3 cents)
+- Annual cost: ~$1.40
 
-**Conclusion:** API costs are negligible for this use case. The value (40 min/week saved) far outweighs cost.
+**Conclusion:** API costs are negligible for this use case. The value (40+ min/week saved) far outweighs cost.
 
 ---
 
@@ -488,10 +546,10 @@ if ({{json_parser.success}} == false) {
 
 **Potential Improvements:**
 
-1. **Few-shot examples** - Include 2-3 examples of good recipe selections
-2. **Chain-of-thought** - Ask Claude to think through constraints before selecting
-3. **Structured reasoning** - Request specific format for reasoning (constraints satisfied, constraints relaxed, trade-offs made)
-4. **Feedback loop** - Incorporate user's manual adjustments to learn preferences over time
-5. **Conversational refinement** - Allow user to refine selections through dialogue before committing
+1. **Few-shot examples** - Include 2-3 examples of good recipe selections in Prompt 1
+2. **Chain-of-thought** - Ask Claude to reason through constraints before selecting
+3. **Feedback loop** - Incorporate user's manual adjustments to learn preferences over time
+4. **Conversational refinement** - Allow user to refine selections through dialogue before committing
+5. **Macro tracking** - Extend shopping list prompt to include approximate nutritional totals per category
 
 **Not Implemented Yet:** These would improve quality but add complexity. Current ~98% success rate is acceptable for now.
